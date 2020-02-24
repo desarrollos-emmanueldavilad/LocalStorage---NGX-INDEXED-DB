@@ -1,0 +1,7 @@
+{
+  "name": "hybridStorage",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
