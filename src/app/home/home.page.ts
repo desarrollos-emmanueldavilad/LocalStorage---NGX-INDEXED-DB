@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { DBConfig } from 'ngx-indexed-db';
+
+
 
 @Component({
   selector: 'app-home',
