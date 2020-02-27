@@ -24,12 +24,11 @@ import { CLIENTE_CONFIGURACION } from './model/configuration';
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
         AppRoutingModule,
-    ArquitecturaModule.forRoot(CLIENTE_CONFIGURACION)
+    ArquitecturaModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
-   
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
