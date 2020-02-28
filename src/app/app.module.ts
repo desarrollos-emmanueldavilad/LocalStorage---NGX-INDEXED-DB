@@ -14,9 +14,6 @@ import { CLIENTE_CONFIGURACION } from './model/configuration';
 
 
 
-
-
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -24,7 +21,7 @@ import { CLIENTE_CONFIGURACION } from './model/configuration';
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
         AppRoutingModule,
-    ArquitecturaModule
+    ArquitecturaModule.forRoot(CLIENTE_CONFIGURACION)
   ],
   providers: [
     StatusBar,

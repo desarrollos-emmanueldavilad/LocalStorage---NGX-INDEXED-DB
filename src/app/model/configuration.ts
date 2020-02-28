@@ -1,11 +1,11 @@
 import { DBConfig } from 'ngx-indexed-db';
 
 export const CLIENTE_CONFIGURACION: DBConfig = {
-  name: '@ARGOCONFIGU',
-  version: 1,
+  name: 'CLIENTECONGIG',
+  version: 2,
   objectStoresMeta : [
   {
-    store: 'ARTHAS',
+    store: 'USUARIOS',
     storeConfig: { keyPath: "id", autoIncrement: true },
     storeSchema: [
       { name: "nombre", keypath: "nombre", options: { unique: false } },
@@ -18,5 +18,3 @@ export const CLIENTE_CONFIGURACION: DBConfig = {
 
 };
 
-  
-  

@@ -1,38 +1,42 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>desde componente</ion-title>
+    <ion-title>ionicStorage</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+
 <ion-item>
   <ion-label position="fixed">Nombre</ion-label>
-  <ion-input [(ngModel)]="newItem.nombre1"></ion-input>
+  <ion-input [(ngModel)]="newItem.nombre"></ion-input>
 </ion-item>
 
 <ion-item>
   <ion-label position="fixed">Apellido </ion-label>
-  <ion-input [(ngModel)]="newItem.apellido1"></ion-input>
+  <ion-input [(ngModel)]="newItem.apellido"></ion-input>
 </ion-item>
+
+
 
 <ion-item>
   <ion-label position="fixed">Phone</ion-label>
-  <ion-input [(ngModel)]="newItem.telefono1"></ion-input>
+  <ion-input [(ngModel)]="newItem.telefono"></ion-input>
 </ion-item>
 
-<ion-button expand="full" (click)="add()">Add Item</ion-button>
+
 
 <ion-item-sliding *ngFor="let item of items"> 
   <ion-item>
     <ion-label text-wrap>
-      <h3>{{item.nombre1}}</h3>
+      <h3>{{item.nombre}}</h3>
       <ion-text color="secondary">
-        <p>{{item.apellido1}}</p>
+        <p>{{item.apellido}}</p>
         <br>
-        <p>{{item.telefono1}}</p>
+        <p>{{item.telefono}}</p>
 
       </ion-text>
-      <p>{{item.modified1 | date: 'short'}}</p>
+      <p>{{item.modified | date: 'short'}}</p>
     </ion-label>
   </ion-item>
 

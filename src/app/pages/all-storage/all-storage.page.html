@@ -11,6 +11,11 @@
 </ion-item>
 
 <ion-item>
+  <ion-label position="fixed">Nombre</ion-label>
+  <ion-input [(ngModel)]="newItem.nombre"></ion-input>
+</ion-item>
+
+<ion-item>
   <ion-label position="fixed">Apellido </ion-label>
   <ion-input [(ngModel)]="newItem.apellido"></ion-input>
 </ion-item>
@@ -23,7 +28,10 @@
 </ion-item>
 
 <ion-button expand="full" (click)="add()">Add Item</ion-button>
-<ion-button expand="full" (click)="addSecret()">Add Secret</ion-button>
+<ion-button expand="full" (click)="getIndex('nombre', 'emmanuel')">GET INDEX</ion-button>
+<ion-button expand="full" (click)="Count()">Count</ion-button>
+<ion-button expand="full" (click)="Clear()">Clear</ion-button>
+
 
 <ion-item-sliding *ngFor="let item of items"> 
   <ion-item>
@@ -46,6 +54,8 @@
 
   </ion-item-options>
 </ion-item-sliding>
+
+
 
 
 

@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { AllStoragePageRoutingModule } from './all-storage-routing.module';
 
 import { AllStoragePage } from './all-storage.page';
-import { StorageService } from 'src/app/arquitectura/services/storage.service';
-import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 
 @NgModule({
@@ -17,9 +15,8 @@ import { NgxIndexedDBService } from 'ngx-indexed-db';
     FormsModule,
     IonicModule,
     AllStoragePageRoutingModule,
-
   ],
   declarations: [AllStoragePage],
-  providers:[StorageService,NgxIndexedDBService ]
+  providers:[]
 })
 export class AllStoragePageModule {}

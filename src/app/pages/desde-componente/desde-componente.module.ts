@@ -8,6 +8,7 @@ import { DesdeComponentePageRoutingModule } from './desde-componente-routing.mod
 
 import { DesdeComponentePage } from './desde-componente.page';
 import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
+import { ArquitecturaModule } from 'src/app/arquitectura/arquitectura.module';
 export const dbArgoProbando: DBConfig = {
   name: '@ARGO',
   version:1,
@@ -29,6 +30,7 @@ export const dbArgoProbando: DBConfig = {
     CommonModule,
     FormsModule,
     IonicModule,
+    ArquitecturaModule.forRoot(dbArgoProbando),
     DesdeComponentePageRoutingModule,
   ],
   declarations: [DesdeComponentePage]

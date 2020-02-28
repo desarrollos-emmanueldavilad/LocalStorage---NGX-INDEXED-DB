@@ -13,7 +13,9 @@ export class StorageService {
     private dbService: NgxIndexedDBService,
     public storage: Storage,
     private secureStorage: SecureStorage
-  ) {}
+  ) {
+  }
+  
 
   secure(){
     this.secureStorage.create('my_store_name')
@@ -40,7 +42,7 @@ export class StorageService {
   });
   }
 
-  addItem(DBNAME: string, item: any) {
+  addItem(DBNAME: string, item: any): Promise<any> {
     return this.dbService.add(DBNAME, item);
   }
 
@@ -56,7 +58,51 @@ export class StorageService {
     return this.dbService.getAll(DBNAME);
   }
 
+  getIndex(DBNAME:string, name: string , keypath: string){
+   return this.dbService.getByIndex(DBNAME, name, keypath).then(
+      data => {
+          console.log(data);
+      },
+      error => {
+          console.log(error);
+      }
+  );
+  }
+
   delete(DBNAME: string, id) {
     return this.dbService.delete(DBNAME, id);
+  }
+
+  count(DBNAME: string){
+  return this.dbService.count(DBNAME).then(
+      peopleCount => {
+          console.log(peopleCount);
+      },
+      error => {
+          console.log(error);
+      }
+  );
+  }
+
+  clearDB(DBNAME: string){
+  return  this.dbService.clear(DBNAME).then(
+      () => {
+         console.log('Clear!')
+      },
+      error => {
+          console.log(error);
+      }
+  );
+  }
+
+  deleteHybrid(){
+   return this.dbService.deleteDatabase().then(
+      () => {
+          console.log('Database deleted successfully');
+      },
+      error => {
+          console.log(error);
+      }
+  );
   }
 }

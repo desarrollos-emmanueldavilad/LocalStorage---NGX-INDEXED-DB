@@ -2,10 +2,9 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { StorageService } from "src/app/arquitectura/services/storage.service";
 import { Platform, ToastController } from "@ionic/angular";
 import { Item } from "src/app/model/argo.model";
-import {
-  SecureStorage,
-  SecureStorageObject
-} from "@ionic-native/secure-storage/ngx";
+import { CLIENTE_CONFIGURACION } from "src/app/model/configuration";
+import { SecService } from 'src/app/arquitectura/services/secureStorage.service';
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 
 @Component({
   selector: "app-all-storage",
@@ -23,64 +22,46 @@ export class AllStoragePage implements OnInit {
   constructor(
     private sService: StorageService,
     private plt: Platform,
-    private secure: SecureStorage,
-    private toastCOntroller: ToastController
+    private toastCOntroller: ToastController,
+    private secureService: SecService ,
+
   ) {
     this.plt.ready().then(() => {
       this.loadItems();
     });
-
-    this.secure.create("my_store_name").then((storage: SecureStorageObject) => {
-      storage.set("mobile-phone1", "+44444444").then(
-        data => console.log(data),
-        error => console.log(error)
-      );
-
-      console.log(
-        storage.get("mobile-phone1")
-      );
-
-      // storage.remove('mobile-phone')
-      // .then(
-      //     data => console.log(data),
-      //     error => console.log(error)
-      // );
-    });
+    this.secureService.cr();
   }
 
   loadItems() {
     //   this.sService.getItems().then(items =>{
-    this.sService.getAll("ARTHAS").then(items => {
+    this.sService.getAll("USUARIOS").then(items => {
       this.items = items;
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   add() {
     this.newItem.modified = Date.now();
     this.newItem.id = Date.now();
 
-    this.sService.addItem("ARTHAS", this.newItem).then(item => {
+    this.sService.addItem("USUARIOS", this.newItem).then(item => {
       this.sService.driverUsed();
       this.newItem = <Item>{};
       this.showToast("Item  br");
       this.loadItems();
-      this.secure.create("Sensitive").then((storage: SecureStorageObject) => {
-        storage.set("DATOS", `${this.newItem.nombre}`).then(
-          data => console.log(data),
-          error => console.log(error)
-        );
-  
-        console.log(
-          storage.get("Sensitive.data")
-        );
-      });
     });
   }
 
   driverUsed() {
     this.sService.driverUsed();
+  }
+
+  getIndex(name, keypath) {
+    this.sService.getIndex("USUARIOS", name, keypath).then(data => {
+      console.log(data);
+    });
   }
 
   async showToast(msg) {
@@ -95,7 +76,7 @@ export class AllStoragePage implements OnInit {
     item.nombre = `Updated: ${item.nombre}`;
     item.modified = Date.now();
 
-    this.sService.update("ARTHAS", item).then(item => {
+    this.sService.update("USUARIOS", item).then(item => {
       this.showToast("Item updated!");
       alert("updated");
       this.loadItems();
@@ -103,35 +84,25 @@ export class AllStoragePage implements OnInit {
   }
 
   deleteItem(item: Item) {
-    this.sService.delete("ARTHAS", item.id).then(item => {
+    this.sService.delete("USUARIOS", item.id).then(item => {
       this.showToast("Item removed!");
       alert("delete"); // fix or sliding is stuck afterwards
       this.loadItems();
     });
   }
 
-  addSecret() {
-    this.secure.create("my_store_name").then((storage: SecureStorageObject) => {
-      storage.set("mobile-phone", "+123123123").then(
-        data => console.log(data),
-        error => console.log(error)
-      );
-
-      storage.get("mobile-phone").then(
-        data => console.log("nuestro dato", data),
-        error => console.log(error)
-      );
-
-      storage.get("mobile-phone1").then(
-        data => console.log("nuestro dato 1", data),
-        error => console.log(error)
-      );
-
-      // storage.remove('mobile-phone')
-      // .then(
-      //     data => console.log(data),
-      //     error => console.log(error)
-      // );
+  Count() {
+    this.sService.count("USUARIOS").then(count => {
+      console.log(count);
     });
   }
+
+  Clear() {
+    this.sService.clearDB("USUARIOS").then(cl => {
+      console.log(cl);
+    });
+  }
+
+
+
 }
