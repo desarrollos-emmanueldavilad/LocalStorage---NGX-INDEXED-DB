@@ -9,12 +9,33 @@ import { error } from 'util';
 export class SecService {
   constructor(
     public platform: Platform,
-    public secureStorage: SecureStorage
+    private secureStorage: SecureStorage
   ) {
     
   }
-cr(){
+cr(): Promise<any>{
 return  this.secureStorage.create('my_store_name')
+.then((storage: SecureStorageObject) => {
+
+   storage.get('key')
+     .then(
+       data => console.log(data),
+       error => console.log(error)
+   );
+
+   storage.set('key', 'value')
+     .then(
+      data => console.log(data),
+       error => console.log(error)
+   );
+
+   storage.remove('key')
+   .then(
+       data => console.log(data),
+       error => console.log(error)
+   );
+
+});
 }
   
 addSecret() {

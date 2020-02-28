@@ -2,9 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { StorageService } from "src/app/arquitectura/services/storage.service";
 import { Platform, ToastController } from "@ionic/angular";
 import { Item } from "src/app/model/argo.model";
-import { CLIENTE_CONFIGURACION } from "src/app/model/configuration";
-import { SecService } from 'src/app/arquitectura/services/secureStorage.service';
-import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
+
 
 @Component({
   selector: "app-all-storage",
@@ -23,13 +21,11 @@ export class AllStoragePage implements OnInit {
     private sService: StorageService,
     private plt: Platform,
     private toastCOntroller: ToastController,
-    private secureService: SecService ,
 
   ) {
     this.plt.ready().then(() => {
       this.loadItems();
     });
-    this.secureService.cr();
   }
 
   loadItems() {

@@ -21,7 +21,7 @@ import { CLIENTE_CONFIGURACION } from './model/configuration';
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
         AppRoutingModule,
-    ArquitecturaModule.forRoot(CLIENTE_CONFIGURACION)
+    ArquitecturaModule.forRoot()
   ],
   providers: [
     StatusBar,
