@@ -1,8 +1,11 @@
 import { Injectable } from "@angular/core";
-import { NgxIndexedDBService} from "ngx-indexed-db";
+import { NgxIndexedDBService } from "ngx-indexed-db";
 import { Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
-import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
+import {
+  SecureStorage,
+  SecureStorageObject
+} from "@ionic-native/secure-storage/ngx";
 
 @Injectable({
   providedIn: "root"
@@ -13,96 +16,90 @@ export class StorageService {
     private dbService: NgxIndexedDBService,
     public storage: Storage,
     private secureStorage: SecureStorage
-  ) {
-  }
-  
+  ) {}
 
-  secure(){
-    this.secureStorage.create('my_store_name')
-  .then((storage: SecureStorageObject) => {
+  secure() {
+    this.secureStorage
+      .create("my_store_name")
+      .then((storage: SecureStorageObject) => {
+        storage.get("key").then(
+          data => console.log(data),
+          error => console.log(error)
+        );
 
-     storage.get('key')
-       .then(
-         data => console.log(data),
-         error => console.log(error)
-     );
+        storage.set("key", "value").then(
+          data => console.log(data),
+          error => console.log(error)
+        );
 
-     storage.set('key', 'value')
-       .then(
-        data => console.log(data),
-         error => console.log(error)
-     );
-
-     storage.remove('key')
-     .then(
-         data => console.log(data),
-         error => console.log(error)
-     );
-
-  });
+        storage.remove("key").then(
+          data => console.log(data),
+          error => console.log(error)
+        );
+      });
   }
 
-  addItem(DBNAME: string, item: any): Promise<any> {
-    return this.dbService.add(DBNAME, item);
+  public addItem(dbName: string, item: any): Promise<any> {
+    return this.dbService.add(dbName, item);
   }
 
-  update(DBNAME: string, item: any) {
-    return this.dbService.update(DBNAME, item);
+  public update(dbName: string, item: any): Promise<any> {
+    return this.dbService.update(dbName, item);
   }
 
-  driverUsed() {
-    console.log("Driver Used: " + this.storage.driver);
+  public driverUsed() {
+    console.log('Driver Used: ' + this.storage.driver);
   }
 
-  getAll(DBNAME: string): Promise<any[]> {
-    return this.dbService.getAll(DBNAME);
+  public getAll(dbName: string): Promise<any[]> {
+    return this.dbService.getAll(dbName);
   }
 
-  getIndex(DBNAME:string, name: string , keypath: string){
-   return this.dbService.getByIndex(DBNAME, name, keypath).then(
+  public getIndex(dbName: string, name: string, keypath: string): Promise<any> {
+    return this.dbService.getByIndex(dbName, name, keypath).then(
       data => {
-          console.log(data);
+        console.log(data);
       },
       error => {
-          console.log(error);
+        console.log(error);
       }
-  );
+    );
   }
 
-  delete(DBNAME: string, id) {
-    return this.dbService.delete(DBNAME, id);
+  public delete(dbName: string, id): Promise<any> {
+    return this.dbService.delete(dbName, id);
   }
 
-  count(DBNAME: string){
-  return this.dbService.count(DBNAME).then(
+  public count(dbName: string): Promise<any> {
+    return this.dbService.count(dbName).then(
       peopleCount => {
-          console.log(peopleCount);
+        console.log(peopleCount);
       },
       error => {
-          console.log(error);
+        console.log(error);
       }
-  );
+    );
   }
 
-  clearDB(DBNAME: string){
-  return  this.dbService.clear(DBNAME).then(
+  public clearDB(dbName: string): Promise<any> {
+    return this.dbService.clear(dbName).then(
       () => {
-         console.log('Clear!')
+        console.log("Clear!");
       },
       error => {
-          console.log(error);
+        console.log(error);
       }
-  );
+    );
   }
 
-  deleteHybrid(){
-   return this.dbService.deleteDatabase().then(
+  public deleteHybrid(): Promise<any> {
+    return this.dbService.deleteDatabase().then(
       () => {
-          console.log('Database deleted successfully');
+        console.log("Database deleted successfully");
       },
       error => {
-          console.log(error);
+        console.log(error);
       }
-  );
+    );
   }
 }

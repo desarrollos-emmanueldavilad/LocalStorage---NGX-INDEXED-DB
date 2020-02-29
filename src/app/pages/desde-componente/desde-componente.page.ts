@@ -97,16 +97,7 @@ export class DesdeComponentePage implements OnInit {
     toast.present();
   }
 
-  updateItem(item: Item) {
-    item.nombre = `Updated: ${item.nombre}`;
-    item.modified = Date.now();
-
-    this.sService.update("USUARIOS", item).then(item => {
-      this.showToast("Item updated!");
-      alert("updated");
-      this.loadItems();
-    });
-  }
+  
 
   deleteItem(item: Item) {
     this.sService.delete("USUARIOS", item.id).then(item => {
