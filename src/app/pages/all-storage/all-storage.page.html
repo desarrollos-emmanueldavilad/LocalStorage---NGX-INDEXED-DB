@@ -10,10 +10,6 @@
   <ion-input [(ngModel)]="newItem.nombre"></ion-input>
 </ion-item>
 
-<ion-item>
-  <ion-label position="fixed">Nombre</ion-label>
-  <ion-input [(ngModel)]="newItem.nombre"></ion-input>
-</ion-item>
 
 <ion-item>
   <ion-label position="fixed">Apellido </ion-label>
@@ -33,7 +29,7 @@
 <ion-button expand="full" (click)="Clear()">Clear</ion-button>
 
 
-<ion-item-sliding *ngFor="let item of items"> 
+<ion-item-sliding *ngFor="let item of items | async"> 
   <ion-item>
     <ion-label text-wrap>
       <h3>{{item.nombre}}</h3>

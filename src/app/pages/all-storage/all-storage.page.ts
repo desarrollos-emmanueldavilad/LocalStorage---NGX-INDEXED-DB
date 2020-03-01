@@ -10,7 +10,7 @@ import { Item } from "src/app/model/argo.model";
   styleUrls: ["./all-storage.page.scss"]
 })
 export class AllStoragePage implements OnInit {
-  items: Item[] = [];
+  items: any[];
   data: any;
 
   @ViewChild("mylist", { static: true }) mylist;
@@ -29,8 +29,8 @@ export class AllStoragePage implements OnInit {
   }
 
   loadItems() {
-    //   this.sService.getItems().then(items =>{
-    this.sService.getAll("USUARIOS").then(items => {
+    //   this.sService.getItems().subscribe(items =>{
+    this.sService.getAll("USUARIOS").subscribe(items => {
       this.items = items;
     });
   }
@@ -42,7 +42,7 @@ export class AllStoragePage implements OnInit {
     this.newItem.modified = Date.now();
     this.newItem.id = Date.now();
 
-    this.sService.addItem("USUARIOS", this.newItem).then(item => {
+    this.sService.addItem("USUARIOS", this.newItem).subscribe(item => {
       this.sService.driverUsed();
       this.newItem = <Item>{};
       this.showToast("Item  br");
@@ -51,11 +51,13 @@ export class AllStoragePage implements OnInit {
   }
 
   driverUsed() {
-    this.sService.driverUsed();
+    this.sService.driverUsed().subscribe((data)=>{
+      console.log('Drive', data);
+    });
   }
 
   getIndex(name, keypath) {
-    this.sService.getIndex("USUARIOS", name, keypath).then(data => {
+    this.sService.getIndex("USUARIOS", name, keypath).subscribe(data => {
       console.log(data);
     });
   }
@@ -72,7 +74,7 @@ export class AllStoragePage implements OnInit {
     item.nombre = `Updated: ${item.nombre}`;
     item.modified = Date.now();
 
-    this.sService.update("USUARIOS", item).then(item => {
+    this.sService.update("USUARIOS", item).subscribe(item => {
       this.showToast("Item updated!");
       alert("updated");
       this.loadItems();
@@ -80,7 +82,7 @@ export class AllStoragePage implements OnInit {
   }
 
   deleteItem(item: Item) {
-    this.sService.delete("USUARIOS", item.id).then(item => {
+    this.sService.delete("USUARIOS", item.id).subscribe(item => {
       this.showToast("Item removed!");
       alert("delete"); // fix or sliding is stuck afterwards
       this.loadItems();
@@ -88,13 +90,13 @@ export class AllStoragePage implements OnInit {
   }
 
   Count() {
-    this.sService.count("USUARIOS").then(count => {
+    this.sService.count("USUARIOS").subscribe(count => {
       console.log(count);
     });
   }
 
   Clear() {
-    this.sService.clearDB("USUARIOS").then(cl => {
+    this.sService.clearDB("USUARIOS").subscribe(cl => {
       console.log(cl);
     });
   }

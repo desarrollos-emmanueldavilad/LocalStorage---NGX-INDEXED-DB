@@ -6,6 +6,7 @@ import {
   SecureStorage,
   SecureStorageObject
 } from "@ionic-native/secure-storage/ngx";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -18,88 +19,115 @@ export class StorageService {
     private secureStorage: SecureStorage
   ) {}
 
-  secure() {
-    this.secureStorage
-      .create("my_store_name")
-      .then((storage: SecureStorageObject) => {
-        storage.get("key").then(
-          data => console.log(data),
-          error => console.log(error)
-        );
-
-        storage.set("key", "value").then(
-          data => console.log(data),
-          error => console.log(error)
-        );
-
-        storage.remove("key").then(
-          data => console.log(data),
-          error => console.log(error)
-        );
-      });
+  public addItem(dbName: string, item: any): Observable<any> {
+    return new Observable(observer => {
+      observer.next(
+        this.dbService.add(dbName, item).then(
+          data => {
+            console.log("Item added");
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      );
+    });
   }
 
-  public addItem(dbName: string, item: any): Promise<any> {
-    return this.dbService.add(dbName, item);
+  public update(dbName: string, item: any) {
+    return new Observable(observer => {
+      observer.next(
+        this.dbService.update(dbName, item).then(
+          data => {
+            console.log(data);
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      );
+    });
   }
 
-  public update(dbName: string, item: any): Promise<any> {
-    return this.dbService.update(dbName, item);
+  public driverUsed(): Observable<any> {
+    return new Observable(observer => {
+      observer.next(this.storage.driver);
+    });
   }
 
-  public driverUsed() {
-    console.log('Driver Used: ' + this.storage.driver);
+  public getAll(dbName: string): Observable<any> {
+    return new Observable(observer => {
+      observer.next(this.dbService.getAll(dbName));
+    });
   }
 
-  public getAll(dbName: string): Promise<any[]> {
-    return this.dbService.getAll(dbName);
+  public getIndex(
+    dbName: string,
+    name: string,
+    keypath: string
+  ): Observable<any> {
+    return new Observable(observer => {
+      observer.next(
+        this.dbService.getByIndex(dbName, name, keypath).then(
+          data => {
+            console.log(data);
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      );
+    });
   }
 
-  public getIndex(dbName: string, name: string, keypath: string): Promise<any> {
-    return this.dbService.getByIndex(dbName, name, keypath).then(
-      data => {
-        console.log(data);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+  public delete(dbName: string, id): Observable<any> {
+    return new Observable(observer => {
+      observer.next(this.dbService.delete(dbName, id));
+    });
   }
 
-  public delete(dbName: string, id): Promise<any> {
-    return this.dbService.delete(dbName, id);
+  public count(dbName: string): Observable<any> {
+    return new Observable(observer => {
+      observer.next(
+        this.dbService.count(dbName).then(
+          peopleCount => {
+            console.log(peopleCount);
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      );
+    });
   }
 
-  public count(dbName: string): Promise<any> {
-    return this.dbService.count(dbName).then(
-      peopleCount => {
-        console.log(peopleCount);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+  public clearDB(dbName: string): Observable<any> {
+    return new Observable(observer => {
+      observer.next(
+        this.dbService.clear(dbName).then(
+          () => {
+            console.log("Clear!");
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      );
+    });
   }
 
-  public clearDB(dbName: string): Promise<any> {
-    return this.dbService.clear(dbName).then(
-      () => {
-        console.log("Clear!");
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  public deleteHybrid(): Promise<any> {
-    return this.dbService.deleteDatabase().then(
-      () => {
-        console.log("Database deleted successfully");
-      },
-      error => {
-        console.log(error);
-      }
-    );
+  public deleteHybrid(): Observable<any> {
+    return new Observable(observer => {
+      observer.next(
+        this.dbService.deleteDatabase().then(
+          () => {
+            console.log("Database deleted successfully");
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      );
+    });
   }
 }
