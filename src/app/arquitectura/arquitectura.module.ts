@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { NgxIndexedDBModule, DBConfig, NgxIndexedDBService, CONFIG_TOKEN } from 'ngx-indexed-db';
 import { StorageService } from './services/storage.service';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
-import { SecureStorage,} from '@ionic-native/secure-storage/ngx';
+import { SecureStorage, } from '@ionic-native/secure-storage/ngx';
 import { CLIENTE_CONFIGURACION } from '../model/configuration';
+import {KeychainTouchId} from '@ionic-native/keychain-touch-id/ngx';
 
 
 export let STORE_CONFIG: DBConfig = CLIENTE_CONFIGURACION;
@@ -16,12 +17,12 @@ export const argoConfig: DBConfig = {
   objectStoresMeta : [
   {
     store: 'USUARIOS',
-    storeConfig: { keyPath: "id", autoIncrement: true },
+    storeConfig: { keyPath: 'id', autoIncrement: true },
     storeSchema: [
-      { name: "nombre", keypath: "nombre", options: { unique: false } },
-      { name: "apellido", keypath: "apellido", options: { unique: false } },
-      { name: "telefono", keypath: "telefono", options: { unique: false } },
-      { name: "modified", keypath: "modified", options: { unique: false } }
+      { name: 'nombre', keypath: 'nombre', options: { unique: false } },
+      { name: 'apellido', keypath: 'apellido', options: { unique: false } },
+      { name: 'telefono', keypath: 'telefono', options: { unique: false } },
+      { name: 'modified', keypath: 'modified', options: { unique: false } }
     ]
   },
 ]
@@ -35,12 +36,12 @@ export const argoConfig: DBConfig = {
     CommonModule,
     NgxIndexedDBModule,
   ],
-  providers:[StorageService, SecureStorage]
+  providers: [StorageService, SecureStorage, KeychainTouchId]
 })
-export class ArquitecturaModule { 
+export class ArquitecturaModule {
   static forRoot(configuration: DBConfig = argoConfig): ModuleWithProviders {
     return {
-    ngModule:ArquitecturaModule,
+    ngModule: ArquitecturaModule,
     providers: [StorageService,
       NgxIndexedDBService, { provide: CONFIG_TOKEN, useValue: configuration }]
         };

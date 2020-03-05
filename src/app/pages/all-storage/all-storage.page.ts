@@ -30,9 +30,12 @@ export class AllStoragePage implements OnInit {
 
   loadItems() {
     //   this.sService.getItems().subscribe(items =>{
-    this.sService.getAll("USUARIOS").subscribe(items => {
-      this.items = items;
-    });
+    this.sService.getAll("USUARIOS").then((res) =>{ 
+      console.log(res)
+      this.items = res})
+    .catch(err =>
+      console.error("Se ha producido un error en getIndex: ", err)
+    );
   }
 
   ngOnInit() {
@@ -42,7 +45,7 @@ export class AllStoragePage implements OnInit {
     this.newItem.modified = Date.now();
     this.newItem.id = Date.now();
 
-    this.sService.addItem("USUARIOS", this.newItem).subscribe(item => {
+    this.sService.addItem3("USUARIOS", this.newItem).then(item => {
       this.sService.driverUsed();
       this.newItem = <Item>{};
       this.showToast("Item  br");
@@ -56,11 +59,15 @@ export class AllStoragePage implements OnInit {
     });
   }
 
-  getIndex(name, keypath) {
-    this.sService.getIndex("USUARIOS", name, keypath).subscribe(data => {
-      console.log(data);
-    });
+  getIndex1() {
+    this.sService.getIndexIDDD("USUARIOS", 1).then(
+      data => {
+        console.log(data);
+      }
+    )
   }
+
+ 
 
   async showToast(msg) {
     const toast = await this.toastCOntroller.create({
@@ -70,11 +77,23 @@ export class AllStoragePage implements OnInit {
     toast.present();
   }
 
+
+  register(form) {
+    console.log(form.value);
+    this.sService.addItem3("USUARIOS", form.value).then(item => {
+      this.sService.driverUsed();
+      this.newItem = <Item>{};
+      this.showToast("Item  br");
+      this.loadItems();
+    });
+   // this.router.navigate(['/login']);
+    }
+
   updateItem(item: Item) {
     item.nombre = `Updated: ${item.nombre}`;
     item.modified = Date.now();
 
-    this.sService.update("USUARIOS", item).subscribe(item => {
+    this.sService.update("USUARIOS", item).then(item => {
       this.showToast("Item updated!");
       alert("updated");
       this.loadItems();
@@ -82,7 +101,7 @@ export class AllStoragePage implements OnInit {
   }
 
   deleteItem(item: Item) {
-    this.sService.delete("USUARIOS", item.id).subscribe(item => {
+    this.sService.delete("USUARIOS", item.id).then(item => {
       this.showToast("Item removed!");
       alert("delete"); // fix or sliding is stuck afterwards
       this.loadItems();
@@ -90,17 +109,20 @@ export class AllStoragePage implements OnInit {
   }
 
   Count() {
-    this.sService.count("USUARIOS").subscribe(count => {
+    this.sService.count("USUARIOS").then(count => {
       console.log(count);
     });
   }
 
   Clear() {
-    this.sService.clearDB("USUARIOS").subscribe(cl => {
+    this.sService.clearDB("USUARIOS").then(cl => {
       console.log(cl);
     });
   }
 
+  DB() {
+    this.sService.deleteHybrid()
+  }
 
 
 }

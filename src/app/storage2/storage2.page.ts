@@ -41,7 +41,7 @@ export class Storage2Page implements OnInit {
     loadItems(){
       
    //   this.sService.getItems().subscribe(items =>{
-    this.sService.getAll('usuarios').subscribe(items =>{
+    this.sService.getAll('usuarios').then(items =>{
   
         this.items = items;
       })
@@ -84,7 +84,7 @@ export class Storage2Page implements OnInit {
       item.nombre = `Updated: ${item.nombre}`;
       item.modified = Date.now();
   
-      this.sService.update('usuarios', item).subscribe(item=>{
+      this.sService.update('usuarios', item).then(item=>{
         this.showToast('Item updated!');
         alert('updated');
         this.loadItems();
@@ -93,7 +93,7 @@ export class Storage2Page implements OnInit {
     }
   
     deleteItem(item:Item){
-      this.sService.delete('usuarios',item.id).subscribe(item=>{
+      this.sService.delete('usuarios',item.id).then(item=>{
         this.showToast('Item removed!');
         alert('delete') // fix or sliding is stuck afterwards
         this.loadItems();

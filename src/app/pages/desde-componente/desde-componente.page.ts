@@ -55,7 +55,7 @@ export class DesdeComponentePage implements OnInit {
 
   loadItems() {
     //   this.sService.getItems().then(items =>{
-    this.sService.getAll("USUARIOS").subscribe(items => {
+    this.sService.getAll("USUARIOS").then(items => {
       this.items = items;
     });
   }
@@ -84,11 +84,11 @@ export class DesdeComponentePage implements OnInit {
   }
 
   getIndex(name, keypath) {
-    this.sService.getIndex("USUARIOS", name, keypath).subscribe(data => {
+    this.sService.getIndex("USUARIOS", name, keypath).then(data => {
       console.log(data);
     });
   }
-
+en
   async showToast(msg) {
     const toast = await this.toastCOntroller.create({
       message: msg,
@@ -100,7 +100,7 @@ export class DesdeComponentePage implements OnInit {
   
 
   deleteItem(item: Item) {
-    this.sService.delete("USUARIOS", item.id).subscribe(item => {
+    this.sService.delete("USUARIOS", item.id).then(item => {
       this.showToast("Item removed!");
       alert("delete"); // fix or sliding is stuck afterwards
       this.loadItems();
@@ -108,13 +108,13 @@ export class DesdeComponentePage implements OnInit {
   }
 
   Count() {
-    this.sService.count("USUARIOS").subscribe(count => {
+    this.sService.count("USUARIOS").then(count => {
       console.log(count);
     });
   }
 
   Clear() {
-    this.sService.clearDB("USUARIOS").subscribe(cl => {
+    this.sService.clearDB("USUARIOS").then(cl => {
       console.log(cl);
     });
   }
